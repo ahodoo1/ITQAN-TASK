@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="trip_requests_report" model="ir.actions.report">
+        <field name="name">Trip Details</field>
+        <field name="model">trip.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">trip_request.trip_details</field>
+        <field name="print_report_name">'trip requests details'</field>
+        <field name="binding_model_id" ref="model_trip_request"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

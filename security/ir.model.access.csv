@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_trip_manger_request,access trip manger request ,model_trip_request,trip_request.trip_manger_group,1,1,1,1
+access_trip_user_request,access trip user request ,model_trip_request,trip_request.group_trip_user,1,1,1,0
+

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="trip_request.trip_details">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="company" t-value="o.company_id"/>
+                <t t-call="web.external_layout_standard">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h2 class="text-center" style="color:red;">TRIP REQUEST DETAILS</h2>
+                        <div class="row">
+                            <div class="col-12">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <table style="border:solid 2px black" class="table table-bordered">
+                                    <tr>
+                                        <td style="width: 30%;background-color:LightGray;">
+                                            <center>Employee Name</center>
+
+                                        </td>
+                                        <td style="width: 70%;background-color:LightGray;">
+                                            <center>
+                                                <span t-esc="o.employee_id.name"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 30%">
+                                            <center>Trip destination</center>
+
+                                        </td>
+                                        <td style="width: 70%">
+                                            <center>
+                                                <span t-field="o.destination"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 30%;background-color:LightGray;">
+                                            <center>Start Date</center>
+
+                                        </td>
+                                        <td style="width: 70%;background-color:LightGray;">
+                                            <center>
+                                                <span t-field="o.start_date"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 30%">
+                                            <center>End Date</center>
+
+                                        </td>
+                                        <td style="width: 70%">
+                                            <center>
+                                                <span t-field="o.end_date"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 30%;background-color:LightGray;">
+                                            <center>Rest Days</center>
+
+                                        </td>
+                                        <td style="width: 70%;background-color:LightGray;">
+                                            <center>
+                                                <span t-field="o.rest_days"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 30%">
+                                            <center>Trip Days</center>
+
+                                        </td>
+                                        <td style="width: 70%">
+                                            <center>
+                                                <span t-field="o.trip_days"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;background-color:LightGray;">
+                                            <center>Trip Full Days</center>
+
+                                        </td>
+                                        <td style="width: 70%;background-color:LightGray;">
+                                            <center>
+                                                <span t-field="o.full_trip_days"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            <center>Contract Start Date</center>
+
+                                        </td>
+                                        <td style="width: 70%">
+                                            <center>
+                                                <span t-esc="o.employee_id.contract_id.date_start"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;background-color:LightGray;">
+                                            <center>Phone</center>
+
+                                        </td>
+                                        <td style="width: 70%;background-color:LightGray;">
+                                            <center>
+                                                <span t-esc="o.employee_id.work_phone"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>   <tr>
+                                        <td style="width: 30%">
+                                            <center>Email</center>
+
+                                        </td>
+                                        <td style="width: 70%">
+                                            <center>
+                                                <span t-esc="o.employee_id.work_email"/>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+                                <br/>
+                                <br/>
+                                <br/>
+
+                                 <div class="text-center" style="width:40%">
+                             <b>Signature ..  </b>
+                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

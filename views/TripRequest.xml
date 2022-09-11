@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="trip_request_search" model="ir.ui.view">
+        <field name="name">trip.request.search</field>
+        <field name="model">trip.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="status"/>
+                <field name="status_change"/>
+                <field name="destination"/>
+                <filter domain="[('status','=','draft')]" name="draft_trip" string="Drafted Trip"/>
+                <filter domain="[('status','=','confirmed')]" name="confirm_trip" string="Confirmed Trip"/>
+                <filter domain="[('status','=','ended')]" name="ended_trip" string="Ended Trip"/>
+                <filter domain="[('start_date','=',(context_today().strftime('%Y-%m-%d')))]" name="ended_trip" string="Today Trips"/>
+
+
+                 <group col="10" colspan="4" expand="0" string="Group By...">
+                    <filter context="{'group_by':'employee_id'}" icon="terp-personal" name="employees_group" string="Employees"/>
+                    <filter context="{'group_by':'start_date'}"  name="start_date_group" string="Start Date"/>
+                    <filter context="{'group_by':'end_date'}"    name="end_date_group" string="End Date"/>
+                    <filter context="{'group_by':'status'}"      name="status_type" string="Status"/>
+                    <filter context="{'group_by':'destination'}" name="country" string="Destinations"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="trip_request_form" model="ir.ui.view">
+        <field name="name">trip.request.form</field>
+        <field name="model">trip.request</field>
+        <field name="arch" type="xml">
+            <form string="Trip Request">
+                <header>
+                    <button
+                            name="button_draft"
+                            string="Set To Draft"
+                            type="object"
+                            icon="fa-play"
+                            colspan="2"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="button_confirm"
+                            string=" Confirm"
+                            type="object"
+                            icon="fa-plus"
+                            colspan="2"
+                            attrs="{'invisible':[('status','=','cancelled')]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="button_cancel"
+                            string="Cancel"
+                            type="object"
+                            icon="fa-undo"
+                            colspan="2"
+                            attrs="{'invisible':[('status','!=','draft')]}"
+                            class="oe_highlight"
+                    />
+                    <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,ended"/>
+
+                </header>
+                <sheet>
+
+                    <group>
+                        <group string="Employee">
+                            <field name="employee_id" attrs="{'readonly':[('status','in',['confirmed','ended'])]}"
+                                   required="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <!--                        <field name="status" invisible="1"/>-->
+                            <field name="status_change" readonly="1" force_save="1"/>
+                        </group>
+                        <group string="Trip Information">
+                            <field name="destination" required="1"
+                                   attrs="{'readonly':[('status','in',['confirmed','ended'])]}"/>
+                            <field name="start_date" required="1"
+                                   attrs="{'readonly':[('status','in',['confirmed','ended'])]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly':[('status','in',['ended'])]}"/>
+                            <field name="rest_days" attrs="{'readonly':[('status','in',['ended'])]}"/>
+                            <field name="full_trip_days" readonly="1"/>
+                            <field name="trip_days" readonly="1"/>
+
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="trip_request_tree" model="ir.ui.view">
+        <field name="name">trip.request.tree</field>
+        <field name="model">trip.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id" optional="show"/>
+                <field name="status" optional="hide"/>
+                <field name="status_change" optional="hide"/>
+                <field name="destination" optional="show"/>
+                <field name="start_date" optional="show"/>
+                <field name="end_date" optional="show"/>
+                <field name="rest_days" optional="hide"/>
+                <field name="trip_days" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- KANBAN VIEWS -->
+   <record id="trip_request_kanban" model="ir.ui.view">
+        <field name="name">trip.request.kanban.view</field>
+        <field name="model">trip.request</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="employee_id"/>
+                <field name="status"/>
+                <field name="trip_days"/>
+                <field name="rest_days"/>
+                <field name="full_trip_days"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click  ">
+                              <div class="oe_kanban_details d-flex flex-column">
+                                <div class="d-flex flex-column">
+                                    <span >
+                                        <strong>Employee : </strong><strong><field name="employee_id"/></strong>
+                                    </span>
+                                    <span><strong>Destination    :</strong>
+                                        <field name="destination"/>
+                                    </span>
+                                    <span><strong>Start Date     :  </strong>
+                                        <field name="start_date"/>
+                                    </span>
+                                    <span><strong>End Date       :  </strong>
+                                        <field name="end_date"/>
+                                    </span>
+                                    <span><strong>Rest Days      :  </strong>
+                                        <field name="rest_days"/>
+                                    </span>
+                                    <span><strong>Full Trip Days :  </strong>
+                                        <field name="full_trip_days"/>
+                                    </span>
+                                    <span><strong>Trip Days      :  </strong>
+                                        <field name="trip_days"/>
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+
+    <record id="trip_request_action" model="ir.actions.act_window">
+        <field name="name">Trip Request</field>
+        <field name="res_model">trip.request</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'search_default_status_type':True}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to Create Trip Request ...
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="trip_request"
+            name="Trip"/>
+    <menuitem
+            id="trip_reqest_views"
+            name="Trip Request"
+            parent="trip_request"
+            action="trip_request_action"
+    />
+</odoo>

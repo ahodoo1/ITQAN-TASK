@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_report_header_footer" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[1]" position="replace">
+            <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                <div class="row">
+                    <div class="col-5 mb4 text-center" >
+                        <div t-field="company.partner_id"
+                           t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                    </div>
+                    <div class="col-2 mb4">
+<!--                        <img t-if="company.logo" t-att-src="image_data_url(company.logo)"-->
+<!--                             style="max-height:80px; max-width:80px;"/>-->
+<!--                        <div style="max-height:80px;max-width:80px">-->
+<!--                             <span  t-esc="company.logo" t-options="{'widget':'image'}"/>-->
+<!--                        </div>-->
+
+                        <img t-if="company.logo" t-att-src="'data:image/*;base64,%s' %to_text(company.logo)"  height="100" width="100" border="2"/>
+                    </div>
+                    <div class="col-5 mb4 text-center">
+                        <div class="text-muted">
+                            page :
+                            <li class="list-inline-item">
+                                <strong><span class="page"/>/
+                                    <span class="topage"/>
+                                </strong>
+                            </li>
+                        </div>
+                        <div>
+                            print date :
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                        </div>
+                        <div>
+                            print by :
+                            <span t-esc="user.name"/>
+                        </div>
+                    </div>
+
+                </div>
+                 <div class="row zero_min_height">
+                        <div class="col-12" style="border-bottom:3px solid black;"/>
+                    </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

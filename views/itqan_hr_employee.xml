@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="add_dest_trip_form" model="ir.ui.view">
+        <field name="name">trips and destinations</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <!-- add new field called Allowed Destination in form view-->
+            <xpath expr="//form/sheet/group/group[1]" position="inside">
+                <field name="allowed_destination" widget='many2many_tags'/>
+            </xpath>
+
+            <!--adding contract to employee form view-->
+            <field name="department_id" position="after">
+                <field name="contract_id"/>
+            </field>
+            <!--adding smart button to retrieve all trip requests -->
+            <xpath expr="//form/sheet/div[1]" position="inside">
+                <button
+                        name="trip_count_action"
+                        type="object"
+                        class="oe_stat_button" icon="fa-calendar">
+                    <div class="o_stat_info">
+                        <field name="trip_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Trip Requests</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!--this code if you want to retrieve trip requests in page in employee form -->
+
+            <!--            <xpath expr="//form/sheet/notebook" position="inside">-->
+            <!--                <page string="Trip Requests">-->
+            <!--                    <field name="triprequest_ids">-->
+            <!--                        <tree>-->
+            <!--                            <field name="destination"/>-->
+            <!--                            <field name="start_date"/>-->
+            <!--                            <field name="end_date"/>-->
+            <!--                            <field name="rest_days"/>-->
+            <!--                            <field name="trip_days"/>-->
+            <!--                            <field name="status" optional="hide"/>-->
+            <!--                            <field name="status_change" optional="hide"/>-->
+            <!--                        </tree>-->
+            <!--                    </field>-->
+            <!--                </page>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+</odoo>
